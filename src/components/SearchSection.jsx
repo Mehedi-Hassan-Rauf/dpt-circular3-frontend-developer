@@ -6,15 +6,15 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const list = ["One", "Two", "Three", "Four", "Five", "Six"];
 
-const SearchSection = () => {
-  const [search, setSearch] = useState(false);
+const SearchSection = ({ setIsResult }) => {
   const [isClick, setIsClick] = useState("One Way");
   const [selectesDate, setSelectedDate] = useState("");
   const Submit = () => {
-    setSearch(true);
+    setIsResult(true);
   };
   return (
-    <div className="w-full flex flex-col items-center gap-6">
+    <div className=" w-10/12 flex flex-col items-center gap-6">
+      {/* First section start*/}
       <div className="w-full flex items-center justify-center">
         <button
           className={`px-5 py-1 border border-black ${
@@ -41,64 +41,82 @@ const SearchSection = () => {
           Multi City
         </button>
       </div>
-      <div className=" w-[1000px] flex justify-center gap-2 border-y border-gray-400 py-3">
-        <Dropdown list={list} name={"LHR"} width={"w-[120px]"} />
-        <Dropdown list={list} name={"CDG"} width={"w-[120px]"} />
-        <div className="relative">
-          <DatePicker
-            selected={selectesDate}
-            onChange={(date) => setSelectedDate(date)}
-            dateFormat="dd-MM-yyyy"
-            className=" border border-black py-0.5 outline-none w-[120px] px-1"
-            //minDate={ new Date()}
-            //maxDate={ new Date()}
-            //filterDate={ date=>date.getDay()!=6 && date.getDay()!=0}
-            // isClearable
-            showYearDropdown
-          />
-          <SlCalender className=" absolute text-lg top-1 right-2 cursor-none " />
+      {/* First section end*/}
+
+      {/* Second section start*/}
+      <div className=" w-full flex flex-col lg:flex-row gap-4 lg:gap-1 border-y border-gray-400 py-3">
+        <div className="w-full lg:w-[40%] grid grid-cols-3 gap-3 lg:gap-1">
+          <Dropdown list={list} name={"LHR"} />
+          <Dropdown list={list} name={"CDG"} />
+          <div className="w-full flex border border-black">
+            <DatePicker
+              selected={selectesDate}
+              onChange={(date) => setSelectedDate(date)}
+              dateFormat="dd-MM-yyyy"
+              className="w-[80%] py-0.5 outline-none pl-1"
+              //minDate={ new Date()}
+              //maxDate={ new Date()}
+              //filterDate={ date=>date.getDay()!=6 && date.getDay()!=0}
+              // isClearable
+              showYearDropdown
+            />
+            <SlCalender className="w-[20%] text-2xl" />
+          </div>
         </div>
-        {/* <Dropdown list={list} name={"22-12-2022"} width={"w-[120px]"} /> */}
-        <Dropdown list={list} name={"Day-"} width={"w-[80px]"} />
-        <Dropdown list={list} name={"Day+"} width={"w-[80px]"} />
-        <Dropdown list={list} name={"Anytime"} width={"w-[180px]"} />
-        <p className="text-xl font-bold flex items-center justify-center">+</p>
-        <Dropdown list={list} name={"ADT"} width={"w-[100px]"} />
-        <Dropdown list={list} name={"1"} width={"w-[100px]"} />
-        <p className="text-xl font-bold flex items-center sustify-center">+</p>
+
+        <div className="w-full lg:w-[40%] grid grid-cols-2 gap-3 lg:gap-1">
+          <div className="grid grid-cols-2 gap-3 lg:gap-1">
+            <Dropdown list={list} name={"Day-"} />
+            <Dropdown list={list} name={"Day+"} />
+          </div>
+          <Dropdown list={list} name={"Anytime"} />
+        </div>
+        <div className="flex gap-2 w-full lg:w-[20%]">
+          <p className="text-xl font-bold flex items-center justify-center">
+            +
+          </p>
+          <div className="w-full grid grid-cols-2 gap-3 lg:gap-1">
+            <Dropdown list={list} name={"ADT"} />
+            <Dropdown list={list} name={"1"} />
+          </div>
+          <p className="text-xl font-bold flex items-center sustify-center">
+            +
+          </p>
+        </div>
       </div>
-      <div>
-        <div className="flex w-[1000px] items-center justify-between border-b-2 pb-2 border-gray-300">
+      {/* Second section end*/}
+
+      {/* Third section start*/}
+      <div className="flex w-full text-sm lg:text-base items-center justify-between border-b-2 pb-2 border-gray-300">
+        <div className="flex gap-1 font-semibold">
+          <input type="checkbox" name="Extra Options" id="Extra Options" />
+          <label htmlFor="Extra Options">Extra Options</label>
+        </div>
+        <div>
           <div className="flex gap-1 font-semibold">
-            <input type="checkbox" name="Extra Options" id="Extra Options" />
-            <label htmlFor="Extra Options">Extra Options</label>
-          </div>
-          <div>
-            <div className="flex gap-1 font-semibold">
-              <input
-                type="radio"
-                name="options"
-                value="Environment"
-                id="Environment"
-              />
-              <label htmlFor="Environment">Environment</label>
-              <input type="radio" name="options" value="Dummy" id="Dummy" />
-              <label htmlFor="Dummy">Dummy</label>
-              <input type="radio" name="options" value="PDT" id="PDT" />
-              <label htmlFor="PDT">PDT</label>
-            </div>
-          </div>
-          <div>
-            <button
-              onClick={Submit}
-              className=" uppercase text-white bg-indigo-800 px-5 rounded-md py-2 text-xs"
-            >
-              SEARCH
-            </button>
+            <input
+              type="radio"
+              name="options"
+              value="Environment"
+              id="Environment"
+            />
+            <label htmlFor="Environment">Environment</label>
+            <input type="radio" name="options" value="Dummy" id="Dummy" />
+            <label htmlFor="Dummy">Dummy</label>
+            <input type="radio" name="options" value="PDT" id="PDT" />
+            <label htmlFor="PDT">PDT</label>
           </div>
         </div>
-        {search && <h3 className=" font-semibold">Data parsed successfully</h3>}
+        <div className="pl-2">
+          <button
+            onClick={Submit}
+            className=" uppercase text-white bg-indigo-800 px-3 lg:px-5 rounded-md py-2 text-xs"
+          >
+            SEARCH
+          </button>
+        </div>
       </div>
+      {/* Third section end*/}
     </div>
   );
 };

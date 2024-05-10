@@ -1,24 +1,23 @@
 import "./App.css";
 import SearchSection from "./components/SearchSection";
-import data from "../data/LHR_CDG_ADT1_TYPE_1.txt";
-import { useEffect } from "react";
+import ResultsSection from "./components/ResultsSection";
+import { useState } from "react";
 
 function App() {
-  useEffect(() => {
-    const gettingData = async () => {
-      const fetchedData = await fetch(data);
-      const res = await fetchedData.json();
-      console.log(res);
-    };
-    gettingData();
-  }, []);
-
+  const [isResult, setIsResult] = useState(false);
   return (
-    <main className="w-screen flex flex-col gap-7">
-      <h1 className="text-2xl py-2 pl-5 border-2 border-gray-200">
+    <main className="max-w-screen min-w-screen flex flex-col items-center gap-7 pb-10">
+      <h1 className="w-full text-2xl py-2 pl-5 text-start border-y-2 border-gray-200">
         Master Price
       </h1>
-      <SearchSection />
+
+      {/* Search section start */}
+      <SearchSection setIsResult={setIsResult} />
+      {/* Search section end */}
+
+      {/* After parsing data the result start */}
+      {isResult && <ResultsSection />}
+      {/* After parsing data the result end */}
     </main>
   );
 }
